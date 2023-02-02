@@ -1,17 +1,17 @@
 <template>
   <div class="todos">
-    <input 
-      type="text" 
-      v-model="newTodo" 
+    <input
+      type="text"
+      v-model="newTodo"
       @keypress.enter="addTodo"
       placeholder="Add a new todo..."
     />
     <div v-if="todos.length">
-      <ul>
+      <transition-group tag="ul" name="todos-list">
         <li v-for="todo in todos" :key="todo.id" @click="deleteTodo(todo.id)">
           {{ todo.text }}
         </li>
-      </ul>
+      </transition-group>
     </div>
     <div v-else>Woohoo, nothing left todo!</div>
   </div>
@@ -53,6 +53,31 @@ export default {
     margin: 20px auto;
     position: relative;
   }
+
+  .todos-list-enter-from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  .todos-list-enter-to {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .todos-list-enter-active {
+    transition: all 0.4s ease;
+  }
+
+  .todos-list-leave-to {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  .todos-list-leave-from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .todos-list-leave-active {
+    transition: all 0.4s ease;
+  }
+
   input {
     width: 100%;
     padding: 12px;
